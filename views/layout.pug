@@ -4,5 +4,15 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    h3 bookFace
+      ul.nav.justify-content-end.main-nav
+        li.nav-item
+          a.nav-link(href='/') View Articles
+        if user
+          li.nav-item
+            a.nav-link(href="#") Hello #{user.first_name}
+
     div.container
       block content
+//todo nav for back to home, profile, new article
+//todo style for profiles (icons) and like buttons

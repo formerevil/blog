@@ -1,0 +1,12 @@
+mixin profileForm(user, buttonText, saveUrl, cancelUrl, deleteUrl)
+    form(action=saveUrl method="post")
+        div.input-container.super-wide
+            label(for="icon").form-label Image
+            input(type="text" name="icon" id="icon" required=true value=user.icon)
+        div.input-container.super-wide
+            label(for="desc").form-label Description
+            textarea(name="desc" id="desc" rows=20 cols=100 placeholder="Here is a bit about me") #{user.desc}
+        a.button(href=cancelUrl) Cancel
+        if(deleteUrl)
+            a.button(href=deleteUrl) Delete
+        button.button.primary(type="submit") #{buttonText}

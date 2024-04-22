@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    div.container.blog
+        div.content
+            div.article-header-row
+                p #{user.first_name}
+                a.button(href=`/profile/${user.id}/edit`) Edit
+            img.user-image(src=user.icon)
+            p.article-body=user.desc

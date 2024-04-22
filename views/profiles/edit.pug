@@ -1,0 +1,6 @@
+extends ../layout
+
+block content
+    include ../mixins/profileForm
+    div.content
+        +profileForm(user, 'Update', `/profile/${user.id}/edit`, `/profile/${user.id}`)

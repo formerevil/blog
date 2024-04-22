@@ -1,0 +1,6 @@
+mixin profileCard(user)
+    a.card(href=`/profile/${user.id}`)
+        img.card-image(src=user.icon)
+        div.card-body
+            div.card-title=user.first_name
+            p.article-body=user.desc
