@@ -135,10 +135,11 @@ table.table {
 }
 
 .button.primary {
-  background: #065F46;
+  background: #eeaf0f;
   color: white;
-  border-color: #065F46;
+  border-color: #f5870d;
 }
+
 
 label {
   display: block;
@@ -228,7 +229,7 @@ nav .container {
 }
 
 nav h3 {
-  color: #065F46;
+  color: #f6a307;
   font-size: 20px;
 }
 

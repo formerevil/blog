@@ -10,7 +10,10 @@ html
           a.nav-link(href='/') View Articles
         if user
           li.nav-item
-            a.nav-link(href="#") Hello #{user.first_name}
+            a.nav-link(href=`/profile/${user.id}`) Hello #{user.first_name}
+        else
+          li.nav-item
+            a.nav-link(href='/login') Hello
 
     div.container
       block content
