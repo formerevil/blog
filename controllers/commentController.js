@@ -4,7 +4,7 @@ module.exports.createComment = async function(req, res){
     let articleId = req.params.articleId;
     await Comment.create({
         author_name: req.body.author_name,
-        body: req.body.body,
+        body_text: req.body.body,
         commented_on: new Date,
         article_id: articleId
     });
@@ -16,10 +16,11 @@ module.exports.addReply = async function(req, res){
     let articleId = parentComment.article_id;
     await Reply.create({
         author_name: req.body.author_name,
-        body: req.body.body,
+        body_text: req.body.body,
         commented_on: new Date,
+        image: req.body.image,
         article_id: articleId,
-        parent_comment_id:parentComment.id
+        parent_id:parentComment.id
     });
     res.redirect(`/article/${articleId}`);
 };

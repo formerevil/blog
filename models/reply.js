@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         tableName:'blog_comments',
         defaultScope: {
             where: {
-                parent_comment_id: {
+                parent_id: {
                     [Op.ne]: null
                 }
             }

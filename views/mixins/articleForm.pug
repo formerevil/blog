@@ -8,11 +8,12 @@ mixin articleForm(article, buttonText, saveUrl, cancelUrl, deleteUrl)
             input(type="text" name="intro" id="intro" required=true placeholder="My intro that draws u in..." value=article.intro)
         div.input-container.super-wide
             label(for="image_url").form-label Image
-            input(type="text" name="image_url" id="image_url" required=true value=article.image_url)
+            input(type="text" name="image_url" id="image_url" required=true placeholder="" value=article.image_url)
+            //todo change this to default picture
         div.input-container
             label(for="body").form-label
             textarea(name="body" id="body" rows=20 cols=100 placeholder="Here is the lengthy detailed body of my blog") #{article.body}
         a.button(href=cancelUrl) Cancel
-        if(deleteUrl)
+        if(deleteUrl && user && article.isOwnedBy(user))
             a.button(href=deleteUrl) Delete
         button.button.primary(type="submit") #{buttonText}

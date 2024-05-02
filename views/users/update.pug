@@ -1,0 +1,6 @@
+extends ../layout
+
+block content
+    include ../mixins/articleForm
+    div.content
+        +articleForm(user, 'Save', `/user/${user.id}/edit`, `/user/${user.id}`, `/user/${user.id}/delete`)

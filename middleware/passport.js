@@ -6,7 +6,8 @@ const md5 = require('md5');
 async function verifyUser(username, password, done){
     const user = await User.findOne({
         where: {
-            email: username
+            email: username,
+            password: md5(password)
         }
     });
     if(!user){
@@ -20,7 +21,8 @@ async function verifyUser(username, password, done){
 passport.use(
     new Strategy(
         {
-            usernameField: 'email'
+            usernameField: 'email',
+            passwordField: 'password'
         },
         verifyUser
     )
@@ -33,7 +35,11 @@ passport.serializeUser(function (user, done) {
 });
 
 passport.deserializeUser(async function (user, done) {
-    const userModel = await User.findByPk(user.id);
+    const userModel = await User.findByPk(user.id, {
+        include: [
+            'role'
+        ]
+    });
     process.nextTick(function () {
         return done(null, userModel);
     });

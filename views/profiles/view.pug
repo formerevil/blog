@@ -1,12 +1,23 @@
 extends ../layout
 
 block content
-    include ../mixins/articleCard
+    //ul.article-list
+    //    each article in articles
+    //        li
+    //            +articleCard(article)
     div.container.blog
         div.content
             div.article-header-row
-                p #{user.first_name}
+                p #{user.email}
                 a.button(href=`/profile/${user.id}/edit`) Edit
-            img.user-image(src=user.icon)
-            p.article-body=user.desc
-            //todo get article viewer to work on profile
+    //        img.user-image(src=user.icon)
+    //        p.article-body=user.desc
+
+        //todo make sure you can see article cards on profile
+
+    var n = 0;
+    while n < 5
+        article = new article
+        article.id = n
+        if article.isOwnedBy(user)
+            +articleCard(article)

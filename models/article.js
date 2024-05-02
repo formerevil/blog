@@ -15,7 +15,14 @@ module.exports = (sequelize, DataTypes) => {
       Article.belongsTo(models.User, {
         as: 'author',
         foreignKey: 'author_id'
-      })
+      });
+      Article.hasMany(models.Comment, {
+        as:'comments',
+        foreignKey:'article_id'
+      });
+    }
+    isOwnedBy(user){
+      return this.author_id=== user.id
     }
   };
   Article.init({
@@ -25,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     image_url: DataTypes.STRING,
     author_id: DataTypes.INTEGER,
     published_on: DataTypes.DATE,
+    dislikenum: DataTypes.INTEGER,
     friendlyPublishedDate: {
       type: DataTypes.VIRTUAL,
       get(){

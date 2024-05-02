@@ -1,0 +1,34 @@
+mixin comment(comment)
+    include replyForm
+    div.comment
+        div.comment-header
+            div.comment-author=comment.author_name
+            div.comment-time=comment.commentedAgo
+
+        div.comment-body=comment.body_text
+        if comment.is_deleted
+            p [Deleted]
+        else if user && user.is('admin')
+            div.comment-body=comment.body
+            a(href=`/comment/${comment.id}/delete`) Delete
+        div
+            h4.reply-header Replies(#{comment.replies.length})
+            div.reply-container
+                +replyForm(comment)
+                if comment.replies.length > 0
+                    ul.reply-list
+                        each reply in comment.replies
+                            li
+                                div.comment
+                                    div.comment-header
+                                        div.comment-author=reply.author_name
+                                        div.comment-time=reply.commented_on
+                                    div.comment-body=reply.body_text
+                                    div.comment-body=comment.image
+                                    if reply.is_deleted
+                                        p [Deleted]
+                                    else if user && user.is('admin')
+                                        div.comment-body=reply.body
+                                        a(href=`/comment/${comment.id}/reply/${reply.id}/delete`) Delete
+                else
+                    p.empty-list No Replies

@@ -1,4 +1,4 @@
-const {Article} = require('../models');
+const {Article, Comment, Reply} = require('../models');
 
 module.exports.renderAddForm = function(req, res){
     const article = {
@@ -16,7 +16,7 @@ module.exports.addArticle = async function(req, res){
         intro: req.body.intro,
         image_url: req.body.image_url,
         body: req.body.body,
-        author_id: 1, //todo get logged in user
+        author_id: req.user.id,
         published_on: new Date()
     });
     res.redirect('/') //todo change the redirect to view all once made
@@ -24,7 +24,20 @@ module.exports.addArticle = async function(req, res){
 
 module.exports.displayArticle = async function(req,res){
     const article = await Article.findByPk(req.params.articleId, {
-        include: ['author']
+        include: ['author',
+            {
+                model: Comment,
+                as: 'comments',
+                required: false,
+                include: [{
+                    model: Reply,
+                    as: 'replies',
+                    required: false
+                }]
+            }
+        ],
+        order: [
+            ['comments', 'commented_on', 'desc']]
     });
     res.render('articles/view', {article});
 };
@@ -38,10 +51,19 @@ module.exports.displayAll = async function(req, res){
 
 module.exports.renderEditForm = async function(req, res){
     const article = await Article.findByPk(req.params.articleId);
+    if(!article.isOwnedBy(user)){
+        res.redirect('/');
+        return;
+    }
     res.render('articles/edit', {article});
 };
 
 module.exports.updateArticle = async function(req, res){
+    const article = await Article.findByPk(req.params.articleId);
+    if(!article.isOwnedBy(user)){
+        res.redirect('/');
+        return;
+    }
     await Article.update({
         title: req.body.title,
         intro: req.body.intro,
@@ -56,6 +78,11 @@ module.exports.updateArticle = async function(req, res){
 }
 
 module.exports.deleteArticle = async function(req, res){
+    const article = await Article.findByPk(req.params.articleId);
+    if(!user.is(mod) && !user.is(admin) && !article.isOwnedBy(user)){
+        res.redirect('/');
+        return;
+    }
     await Article.destroy({
         where: {
             id: req.params.articleId
@@ -63,3 +90,28 @@ module.exports.deleteArticle = async function(req, res){
     });
     res.redirect('/')
 };
+
+ 
+
+ // function myFunction(){
+ //     dislikenum++;
+ //     return article.dislikenum;
+ // }
+//:3
+
+ // const dislike_num = document.querySelector(".dislike_num");
+ // let dislikenum = document.querySelector("#icon"),
+ //     count = document.querySelector("#count");
+ //
+ // let clicked = false;
+ //
+ //
+ //  dislikenum.addEventListener("click", () => {
+ //      if (!clicked) {
+ //          clicked = true;
+ //          count.textContent++;
+//     } else {
+//         clicked = false;
+//         count.textContent--;
+//       }
+//   })

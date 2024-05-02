@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
+    is(role){
+      return this.role.role_name === role;
+    }
   }
+
   User.init({
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
