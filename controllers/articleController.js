@@ -19,7 +19,7 @@ module.exports.addArticle = async function(req, res){
         author_id: req.user.id,
         published_on: new Date()
     });
-    res.redirect('/') //todo change the redirect to view all once made
+    res.redirect('/')
 };
 
 module.exports.displayArticle = async function(req,res){
@@ -79,7 +79,7 @@ module.exports.updateArticle = async function(req, res){
 
 module.exports.deleteArticle = async function(req, res){
     const article = await Article.findByPk(req.params.articleId);
-    if(!user.is(mod) && !user.is(admin) && !article.isOwnedBy(user)){
+    if(!article.isOwnedBy(user)){
         res.redirect('/');
         return;
     }
@@ -90,28 +90,23 @@ module.exports.deleteArticle = async function(req, res){
     });
     res.redirect('/')
 };
+//todo fix delete article and edit article, i cant edit or delete if its my own post??
 
- 
+module.exports.increaseDislike = async function(res, req){
 
- // function myFunction(){
- //     dislikenum++;
- //     return article.dislikenum;
- // }
-//:3
+    addEventListener("click", () => {
+        if (!clicked) {
+            clicked = true;
+            count += 1;
+        }
+    })
+    res.redirect(`/article/${req.params.articleId}`)
+}
 
- // const dislike_num = document.querySelector(".dislike_num");
- // let dislikenum = document.querySelector("#icon"),
- //     count = document.querySelector("#count");
- //
- // let clicked = false;
- //
- //
- //  dislikenum.addEventListener("click", () => {
- //      if (!clicked) {
- //          clicked = true;
- //          count.textContent++;
-//     } else {
-//         clicked = false;
-//         count.textContent--;
-//       }
-//   })
+module.exports.viewUserPosts = async function(req, res){
+    const articles = await Article.findAll({
+        include: ['author']
+    });
+    res.render('articles/viewAll', {articles});
+}
+//todo fix viewUserPosts

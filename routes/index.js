@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const articleController = require('../controllers/articleController');
+const profileController = require('../controllers/profileController');
+const userController = require('../controllers/userController');
+const commentController = require('../controllers/commentController');
+const gameController = require('../controllers/gameController');
+const ensureUserAuthenticated = require('../middleware/ensureUserAuth');
+const userHasRole = require('../middleware/userHasRole');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -35,5 +41,8 @@ router.get('/profile/:userId', profileController.displayProfile);
 router.get('/profile/:userId/edit', profileController.renderEditForm);
 router.post('/profile/:userId/edit', profileController.updateProfile);
 
+router.get('/article/', articleController.viewUserPosts);
 
+router.get('/games/viewAll', gameController.displayAll);
+// :3
 module.exports = router;

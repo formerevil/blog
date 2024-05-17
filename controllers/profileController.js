@@ -1,4 +1,4 @@
-const {User} = require('../models');
+const {User, Article} = require('../models');
 
 module.exports.displayProfile = async function(req, res){
     const user = await User.findByPk(req.params.userId);
@@ -21,3 +21,4 @@ module.exports.updateProfile = async function(req, res){
     });
     res.redirect(`/profile/${req.params.userId}`);
 }
+

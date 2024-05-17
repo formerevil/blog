@@ -9,8 +9,8 @@ block content
                 h1.article-title=article.title
                 if(user && article.isOwnedBy(user))
                     a.button(href=`/article/${article.id}/edit`) Edit
-                if(user && user.is('admin'))
-                    a.button(href=deleteUrl) Delete
+                if(user && article.isOwnedBy(user))
+                    a.button(href=`/article/${article.id}/delete`) Delete
             p.published-on Published
                 strong.emphasize #{article.friendlyPublishedDate}
                 | by
@@ -22,7 +22,6 @@ block content
 
             button.btn(type='button' onclick='myFunction()')
                 img(src="/images/bf_thumbsdown.png", width='50px', alt="Button Image")
-                p #{article.dislikenum}
 
 
 

@@ -3,19 +3,36 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="icon" type="/images/bookface_favicon")
   body
-    h3 bookFace
-      ul.nav.justify-content-end.main-nav
-        li.nav-item
-          a.nav-link(href='/') View Articles
-        if user
+    nav
+      div.container
+        img(src='/images/bookface_logo.png' height='25px')
+        ul.nav.justify-content-end.main-nav
           li.nav-item
-            a.nav-link(href=`/profile/${user.id}`) Hello #{user.first_name}
-        else
+             a.nav-link(href='/') View Articles
           li.nav-item
-            a.nav-link(href='/login') Hello
+            a.nav-link(href=`/article/${Math.floor(Math.random() * (17) + 1)}`) Random Article
+          li.nav-item
+            a.nav-link(href='/games/viewAll') bF Games
+          if user
+            li.nav-item
+              a.nav-link(href=`/article/add`) Write Article
+            li.nav-item
+              img(src=`${user.icon}` height=`25px`)
+              a.nav-link(href=`/profile/${user.id}`) Hello #{user.first_name}
+            li.nav-item
+               a.nav-link(href='/logout') Logout
+            li.nav-item
+              img(src=`https://static-00.iconduck.com/assets.00/wrench-icon-2047x2048-jyerjpd9.png` height=`25px`)
+              a.nav-link(href=`/update/${user.id}`) Settings
+          else
+            li.nav-item
+              a.nav-link(href='/login') Login
+            li.nav-item
+              a.nav-link(href='/register') Register
 
     div.container
       block content
 
-//todo style for profiles (icons) and like buttons
+  //todo fix settings link

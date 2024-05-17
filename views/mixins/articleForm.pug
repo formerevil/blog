@@ -17,3 +17,5 @@ mixin articleForm(article, buttonText, saveUrl, cancelUrl, deleteUrl)
         if(deleteUrl && user && article.isOwnedBy(user))
             a.button(href=deleteUrl) Delete
         button.button.primary(type="submit") #{buttonText}
+
+        button.btn
